@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(cuid())
+  name     String
+  email    String @unique
+  password String
+
+  memberships  GroupMember[]
+  expensesPaid Expense[]
+
+  expenseParticipants ExpenseParticipant[]
+
+  accounts Account[]
+  sessions Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Group {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+
+  members  GroupMember[]
+  expenses Expense[]
+}
+
+model GroupMember {
+  id String @id @default(cuid())
+
+  groupId String
+  userId  String
+
+  joinedAt DateTime
+  leftAt   DateTime?
+
+  group Group @relation(fields: [groupId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+
+  @@unique([groupId, userId])
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  description String
+  amount      Float
+  currency    String
+  splitType   String
+  date        DateTime
+
+  paidById String
+  groupId  String
+
+  paidBy User  @relation(fields: [paidById], references: [id])
+  group  Group @relation(fields: [groupId], references: [id])
+
+  participants ExpenseParticipant[]
+
+  createdAt DateTime @default(now())
+}
+
+model ExpenseParticipant {
+  id String @id @default(cuid())
+
+  expenseId String
+  userId    String
+
+  share Float
+
+  expense Expense @relation(fields: [expenseId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+}
+
+model Settlement {
+  id String @id @default(cuid())
+
+  fromUserId String
+  toUserId   String
+
+  amount Float
+  date   DateTime
+
+  createdAt DateTime @default(now())
+}
+
+model ImportJob {
+  id String @id @default(cuid())
+
+  fileName String
+
+  status String
+
+  createdAt DateTime @default(now())
+
+  anomalies ImportAnomaly[]
+}
+
+model ImportAnomaly {
+  id String @id @default(cuid())
+
+  importJobId String
+
+  rowNumber Int
+
+  issueType String
+
+  actionTaken String
+
+  importJob ImportJob @relation(fields: [importJobId], references: [id])
+}
