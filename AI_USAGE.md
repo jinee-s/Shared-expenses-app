@@ -2,55 +2,120 @@
 
 ## AI Tools Used
 
-ChatGPT was used as a technical assistant during development for discussing architecture ideas, debugging issues, understanding framework behavior, and reviewing implementation approaches.
+* ChatGPT
 
-## How AI Was Used
+## Purpose of AI Usage
 
-AI assistance was primarily used for:
+AI was used as a development assistant during the project for:
 
-* Discussing database schema design
-* Understanding Prisma migration issues
-* Debugging Next.js routing problems
-* Reviewing anomaly detection logic
-* Exploring alternative implementation approaches
+* Architecture discussions
+* Database schema design review
+* Next.js and Prisma debugging
+* API route implementation guidance
+* Import workflow design
+* Documentation review
 
-All final implementation decisions, testing, debugging, and integration were performed manually.
-
-## Examples of AI Suggestions That Required Changes
-
-### Case 1: Import Path Resolution
-
-Suggested approach resulted in unresolved imports due to project structure differences.
-
-Resolution:
-The project structure was reorganized and imports were manually corrected.
+All implementation decisions, testing, debugging, and integration were performed manually.
 
 ---
 
-### Case 2: Route Structure
+## Key Prompts Used
 
-An initial routing approach caused conflicts between API routes and page routes.
+### Prompt 1
 
-Resolution:
-API and UI routes were separated into distinct directories after testing.
+Design a database schema for a shared expenses management application that supports:
+
+* Users
+* Groups
+* Membership history
+* Expenses
+* Settlements
+* CSV imports
+* Anomaly tracking
+
+### Prompt 2
+
+Review the CSV dataset and identify possible anomaly categories such as:
+
+* Duplicate expenses
+* Missing payer
+* Missing currency
+* Refund transactions
+* Settlement rows
+
+### Prompt 3
+
+Suggest a folder structure for a Next.js application using Prisma and PostgreSQL.
+
+### Prompt 4
+
+Help debug Prisma schema validation and migration issues.
+
+### Prompt 5
+
+Review architectural risks for a shared expenses application involving membership changes over time and multi-currency transactions.
 
 ---
 
-### Case 3: Database Schema Validation
+## Examples of Incorrect AI Suggestions
 
-Schema changes initially failed Prisma validation.
+### Case 1: Route Structure Conflict
 
-Resolution:
-Relations and model definitions were reviewed and corrected before migration.
+Problem:
+An AI-generated suggestion created a page route and API route using the same path, causing a Next.js routing conflict.
 
-## Verification Process
+How it was detected:
+The application failed to compile and reported a route conflict.
 
-All generated suggestions were manually reviewed before being added to the project.
+Fix:
+The routes were reorganized and API endpoints were separated from page routes.
 
-Each feature was tested locally, and changes were made where suggestions did not match project requirements.
+---
+
+### Case 2: Prisma Relation Definition
+
+Problem:
+An AI-generated schema suggestion resulted in Prisma validation errors because relations were not correctly defined.
+
+How it was detected:
+Prisma migration generation failed.
+
+Fix:
+Relations were manually reviewed and corrected before rerunning migrations.
+
+---
+
+### Case 3: Import Path Resolution
+
+Problem:
+Suggested import paths did not match the actual project structure.
+
+How it was detected:
+TypeScript compilation errors appeared during development.
+
+Fix:
+Project aliases and import paths were manually corrected.
+
+---
+
+## Human Verification Process
+
+Every AI-generated suggestion was reviewed before implementation.
+
+The following verification steps were performed:
+
+* Manual code review
+* Local testing
+* Database migration validation
+* API testing
+* End-to-end testing of import workflows
+
+AI suggestions were treated as recommendations rather than accepted automatically.
+
+---
 
 ## Responsibility Statement
 
-AI was used as a development assistant and reference tool.
+AI was used as a development assistant to accelerate exploration and debugging.
 
-The final architecture, implementation choices, anomaly handling policies, testing, and project submission remain the responsibility of the developer.
+All final architecture decisions, anomaly handling policies, implementation choices, testing, and project submission remain the responsibility of the developer.
