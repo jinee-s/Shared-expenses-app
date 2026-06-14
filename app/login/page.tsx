@@ -32,7 +32,7 @@ export default function LoginPage() {
 
         alert("Login Successful");
 
-        router.push("/");
+        router.push("/dashboard");
       } else {
         alert(data.error || "Login Failed");
       }
