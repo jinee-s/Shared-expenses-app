@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shared Expenses Management System
 
-## Getting Started
+## Overview
 
-First, run the development server:
+A Splitwise-like shared expenses application built using Next.js, TypeScript, Prisma, PostgreSQL, and Tailwind CSS.
+
+The system supports:
+
+* User management
+* Group management
+* Membership history tracking
+* Expense tracking
+* CSV import
+* Import anomaly detection
+* Balance summary
+
+## Tech Stack
+
+* Next.js
+* TypeScript
+* Prisma ORM
+* PostgreSQL (Neon)
+* Tailwind CSS
+
+## Setup
+
+1. Clone repository
+
+```bash
+git clone <repo-url>
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Configure environment variables
+
+```env
+DATABASE_URL=your_database_url
+```
+
+4. Run migrations
+
+```bash
+npx prisma migrate dev
+```
+
+5. Start application
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* Create and manage users
+* Create and manage groups
+* Track membership changes over time
+* Record expenses
+* Import expenses from CSV
+* Detect data anomalies
+* Generate import reports
+* View balance summaries
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## AI Used
 
-## Learn More
+* ChatGPT
+* GitHub Copilot
 
-To learn more about Next.js, take a look at the following resources:
+## Demo Credentials
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The application includes a simple email/password login module for demonstration purposes.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Sample users:
 
-## Deploy on Vercel
+| Email                                   | Password |
+| --------------------------------------- | -------- |
+| [aisha@test.com](mailto:aisha@test.com) | temp123  |
+| [rohan@test.com](mailto:rohan@test.com) | temp123  |
+| [priya@test.com](mailto:priya@test.com) | temp123  |
+| [meera@test.com](mailto:meera@test.com) | temp123  |
+| [sam@test.com](mailto:sam@test.com)     | temp123  |
+| [dev@test.com](mailto:dev@test.com)     | temp123  |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+After login, users can access group management, expenses, settlements, CSV import, anomaly reports, and balance summaries.

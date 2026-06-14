@@ -61,6 +61,7 @@ if (seenExpenses.has(duplicateKey)) {
   seenExpenses.set(duplicateKey, true);
 }
 
+
       // Missing Payer Detection
       if (!row.paid_by || row.paid_by.trim() === "") {
         await prisma.importAnomaly.create({
@@ -108,6 +109,16 @@ if (amount < 0) {
       rowNumber: index + 1,
       issueType: "NEGATIVE_AMOUNT",
       actionTaken: "TREAT_AS_REFUND",
+    },
+  });
+}
+if (amount === 0) {
+  await prisma.importAnomaly.create({
+    data: {
+      importJobId: importJob.id,
+      rowNumber: index + 1,
+      issueType: "ZERO_AMOUNT",
+      actionTaken: "FLAGGED_FOR_REVIEW",
     },
   });
 }
